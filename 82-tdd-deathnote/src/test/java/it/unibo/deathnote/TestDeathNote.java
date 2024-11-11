@@ -16,12 +16,12 @@ class TestDeathNote {
     private final String deathCause = "karting accident";
     private final String deathDetails = "ran for too long";
 
-    private static final String EMPTYSTRING = "";
+    private static final String EMPTY_STRING = "";
     private static final int RULE = 3;
-    private static final int ZERORULE = 0;
-    private static final int NEGATIVERULE = -1;
-    private static final long SHORTSLEEPINGTIME = 100L;
-    private static final long LONGSLEEPINGTIME = 6100L;
+    private static final int ZERO_RULE = 0;
+    private static final int NEGATIVE_RULE = -1;
+    private static final long SHORT_SLEEPING_TIME = 100L;
+    private static final long LONG_SLEEPING_TIME = 6100L;
     private static final String OK = "OK! Catched correct Exception!";
     private DeathNote dn ;
 
@@ -33,14 +33,14 @@ class TestDeathNote {
     @Test
     public void ConsistenceRule() {
         try {
-            dn.getRule(ZERORULE);
+            dn.getRule(ZERO_RULE);
         } catch (IllegalArgumentException e) {
             assertTrue(e.getMessage()!= null && e.getMessage()!="");
             System.out.println(OK);
         }
         
         try {
-            dn.getRule(NEGATIVERULE);
+            dn.getRule(NEGATIVE_RULE);
         } catch (IllegalArgumentException e) {
             assertTrue(e.getMessage()!= null && e.getMessage()!="");
             System.out.println(OK);
@@ -64,7 +64,7 @@ class TestDeathNote {
         
         assertEquals(false, dn.isNameWritten(name2));
 
-        assertEquals(false, dn.isNameWritten(EMPTYSTRING));
+        assertEquals(false, dn.isNameWritten(EMPTY_STRING));
 
     }
 
@@ -77,17 +77,17 @@ class TestDeathNote {
         }
 
         dn.writeName(name);
-        assertEquals(DeathNoteImplementation.DEFAULTDEATHCAUSE, dn.getDeathCause(name));
+        assertEquals(DeathNoteImplementation.DEFAULT_DEATH_CAUSE, dn.getDeathCause(name));
         dn.writeName(name2);
         assertTrue(dn.writeDeathCause(deathCause));
         assertEquals(deathCause, dn.getDeathCause(name2));
         try {
-            Thread.sleep(SHORTSLEEPINGTIME);
+            Thread.sleep(SHORT_SLEEPING_TIME);
         } catch (InterruptedException e) {
             System.out.println(OK);
         }
         
-        dn.writeDeathCause(DeathNoteImplementation.DEFAULTDEATHCAUSE);
+        dn.writeDeathCause(DeathNoteImplementation.DEFAULT_DEATH_CAUSE);
         assertEquals(deathCause, dn.getDeathCause(name2));
 
     }
@@ -100,19 +100,19 @@ class TestDeathNote {
             System.out.println(OK);
         }
         dn.writeName(name);
-        assertEquals(EMPTYSTRING, dn.getDeathDetails(name));
+        assertEquals(EMPTY_STRING, dn.getDeathDetails(name));
         assertTrue(dn.writeDetails(deathDetails));
         assertEquals(deathDetails, dn.getDeathDetails(name));
 
         dn.writeName(name2);
         try {
-            Thread.sleep(LONGSLEEPINGTIME);
+            Thread.sleep(LONG_SLEEPING_TIME);
         } catch (InterruptedException e) {
             System.out.println(OK);
         }
 
         dn.writeDetails(deathDetails);
-        assertEquals(EMPTYSTRING, dn.getDeathDetails(name2));
+        assertEquals(EMPTY_STRING, dn.getDeathDetails(name2));
 
 
     }

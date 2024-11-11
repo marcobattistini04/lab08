@@ -7,8 +7,10 @@ import java.util.LinkedList;
 import it.unibo.deathnote.api.DeathNote;
 
 public class DeathNoteImplementation implements DeathNote{
-    private final static int MINIMUMRULE = 1;
-    public static final String DEFAULTDEATHCAUSE = "heart attack";
+    private final static int MINIMUM_RULE = 1;
+    public final static String DEFAULT_DEATH_CAUSE = "heart attack";
+    private final static long SHORT_WAITING_TIME = 40L;
+    private final static long LONG_WAITING_TIME = 6040L;
     private long Time;
     private String lastNameWritten;
     List<String> humans = new LinkedList<>();
@@ -16,7 +18,7 @@ public class DeathNoteImplementation implements DeathNote{
     Map<String, String> deathDetails = new HashMap<>();
     @Override
     public String getRule(int ruleNumber) {
-        if(ruleNumber < MINIMUMRULE || ruleNumber > DeathNote.RULES.size()) {
+        if(ruleNumber < MINIMUM_RULE || ruleNumber > DeathNote.RULES.size()) {
             throw new IllegalArgumentException("Invalid rule number " + ruleNumber);
         }
         return DeathNote.RULES.get(ruleNumber);
@@ -41,7 +43,7 @@ public class DeathNoteImplementation implements DeathNote{
             throw new IllegalStateException("the cause given is null");
         }
         Time = System.currentTimeMillis() - Time;
-        if(Time <= 40L) {
+        if(Time <= SHORT_WAITING_TIME) {
             this.deathCause.put(lastNameWritten, cause);
             Time = System.currentTimeMillis();
             return true;
@@ -59,7 +61,7 @@ public class DeathNoteImplementation implements DeathNote{
             throw new IllegalStateException("the details given are null");
         }
         Time = System.currentTimeMillis() - Time;
-        if(Time <= 6040L) {
+        if(Time <= LONG_WAITING_TIME) {
             this.deathDetails.put(this.lastNameWritten, details);
             return true;
         }
@@ -75,7 +77,7 @@ public class DeathNoteImplementation implements DeathNote{
         if(this.deathCause.containsKey(name)) {
             return this.deathCause.get(name);
         } else {
-            return DEFAULTDEATHCAUSE;
+            return DEFAULT_DEATH_CAUSE;
         }       
         
     }
