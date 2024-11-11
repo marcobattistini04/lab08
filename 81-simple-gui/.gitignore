@@ -1,5 +1,5 @@
 *.class
-bin\
-build\
-.gradle\
-build\
+bin/
+build/
+.gradle/
+build/
