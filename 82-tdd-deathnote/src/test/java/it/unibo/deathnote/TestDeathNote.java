@@ -14,8 +14,8 @@ class TestDeathNote {
     private final String name = "Mario Rossi";
     private final String name2 = "Franco Bianchi";
     private final String deathCause = "karting accident";
-    private final String deathDetails = "fall from a great height";
-    private static final String DEFAULTDEATHCAUSE = "heart attack";
+    private final String deathDetails = "ran for too long";
+
     private static final String EMPTYSTRING = "";
     private static final int RULE = 3;
     private static final int ZERORULE = 0;
@@ -34,12 +34,15 @@ class TestDeathNote {
     public void ConsistenceRule() {
         try {
             dn.getRule(ZERORULE);
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
+            assertTrue(e.getMessage()!= null && e.getMessage()!="");
             System.out.println(OK);
         }
+        
         try {
             dn.getRule(NEGATIVERULE);
-        } catch (IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
+            assertTrue(e.getMessage()!= null && e.getMessage()!="");
             System.out.println(OK);
         }
         assertEquals(DeathNote.RULES.get(RULE), this.dn.getRule(RULE));
@@ -74,7 +77,7 @@ class TestDeathNote {
         }
 
         dn.writeName(name);
-        assertEquals(DEFAULTDEATHCAUSE, dn.getDeathCause(name));
+        assertEquals(DeathNoteImplementation.DEFAULTDEATHCAUSE, dn.getDeathCause(name));
         dn.writeName(name2);
         assertTrue(dn.writeDeathCause(deathCause));
         assertEquals(deathCause, dn.getDeathCause(name2));
@@ -84,7 +87,7 @@ class TestDeathNote {
             System.out.println(OK);
         }
         
-        dn.writeDeathCause(DEFAULTDEATHCAUSE);
+        dn.writeDeathCause(DeathNoteImplementation.DEFAULTDEATHCAUSE);
         assertEquals(deathCause, dn.getDeathCause(name2));
 
     }
@@ -98,8 +101,8 @@ class TestDeathNote {
         }
         dn.writeName(name);
         assertEquals(EMPTYSTRING, dn.getDeathDetails(name));
-        assertTrue(dn.writeDetails("run for too long"));
-        assertEquals("run for too long", dn.getDeathDetails(name));
+        assertTrue(dn.writeDetails(deathDetails));
+        assertEquals(deathDetails, dn.getDeathDetails(name));
 
         dn.writeName(name2);
         try {
@@ -109,7 +112,7 @@ class TestDeathNote {
         }
 
         dn.writeDetails(deathDetails);
-        assertEquals("run for too long", dn.getDeathDetails(name2));
+        assertEquals(EMPTYSTRING, dn.getDeathDetails(name2));
 
 
     }
