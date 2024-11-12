@@ -4,7 +4,9 @@ import it.unibo.mvc.api.DrawNumberController;
 import it.unibo.mvc.api.DrawNumberView;
 import it.unibo.mvc.api.DrawResult;
 
-public class DrawNumberConsoleview implements DrawNumberView{
+
+    
+public class DrawNumberConsoleView implements DrawNumberView{
     
     @Override
     public void setController(DrawNumberController observer) {
@@ -20,5 +22,5 @@ public class DrawNumberConsoleview implements DrawNumberView{
     public void result(DrawResult res) {
         System.out.println(res.getDescription());
     }
-    
+
 }
