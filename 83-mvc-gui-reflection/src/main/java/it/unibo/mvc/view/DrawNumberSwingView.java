@@ -8,6 +8,9 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,7 +34,8 @@ public final class DrawNumberSwingView implements DrawNumberView {
 
     private DrawNumberController controller;
     private final JFrame frame = new JFrame(FRAME_NAME);
-
+    private  int mouseX;
+    private  int mouseY;
     /**
      * Builds a new Swing-based interactive view.
      */
@@ -77,8 +81,26 @@ public final class DrawNumberSwingView implements DrawNumberView {
             }
         });
 
-        frame.pack();
-        frame.setLocationByPlatform(true);
+        /*added mouseListener and MouseMotionListener in order to obtain a clearer view on the screen 
+        while having multiple frames */
+        this.frame.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                mouseX = e.getX();
+                mouseY = e.getY();
+            }
+        });
+
+        this.frame.addMouseMotionListener(new MouseMotionAdapter() {
+            public void mouseDragged(MouseEvent e) {
+                int x = e.getXOnScreen() - mouseX;
+                int y = e.getYOnScreen() - mouseY;
+                frame.setLocation(x, y);
+            }
+        });
+
+        
+        this.frame.pack();
+        this.frame.setLocationByPlatform(true);
     }
 
     @Override
