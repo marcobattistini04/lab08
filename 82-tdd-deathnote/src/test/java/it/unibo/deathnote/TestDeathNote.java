@@ -95,7 +95,7 @@ class TestDeathNote {
     @Test
     public void DeathDetailsCorrectTiming () {
         try {
-            dn.writeDeathCause(deathDetails);
+            dn.writeDetails(deathDetails);
         } catch (IllegalStateException e) {
             System.out.println(OK);
         }
